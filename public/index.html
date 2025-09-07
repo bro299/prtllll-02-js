@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Portal Data DPR RI - Database Baru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portal data DPR RI dengan database terbaru dan teknologi Express.js">
+    <meta name="keywords" content="DPR RI, anggota DPR, parlemen Indonesia, Express.js, SQLite">
+    <meta name="robots" content="index, follow">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                     animation: {
+                           'fade-in': 'fadeIn 0.5s ease-in-out',
+                           'slide-up': 'slideUp 0.6s ease-out',
+                           'pulse-custom': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                           'bounce-soft': 'bounce 2s ease-in-out infinite',
+                           'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+         },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    },
+                    screens: {
+                        'xs': '320px',
+                        'xxs': '280px',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+    
+    <nav class="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-indigo-100">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div class="flex justify-between items-center h-12 sm:h-16">
+            <div class="flex items-center space-x-1 sm:space-x-4 min-w-0 flex-1">
+                <i class="fas fa-university text-lg sm:text-2xl text-indigo-600 flex-shrink-0"></i>
+                <h1 class="text-sm sm:text-xl font-bold text-gray-800 truncate">Portal DPR RI</h1>
+                <span class="hidden md:inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-semibold">NEW DB</span>
+            </div>
+            <div class="flex items-center space-x-1 sm:space-x-4">
+                <!-- Tombol ke Web 1 -->
+                <a href="https://portal-dpr-new.onrender.com" class="bg-orange-100 hover:bg-orange-200 text-orange-600 font-medium transition-colors duration-200 flex items-center px-2 py-1 rounded-lg" title="Kembali ke Web Lama">
+                    <i class="fas fa-arrow-left text-sm sm:text-base"></i>
+                    <span class="hidden sm:inline ml-1 text-xs sm:text-sm">Web 1</span>
+                </a>
+                
+                <a href="/" class="text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200 flex items-center px-2 py-1 rounded-lg">
+                    <i class="fas fa-search text-sm sm:text-base"></i>
+                    <span class="hidden sm:inline ml-1 text-sm sm:text-base">Pencarian</span>
+                </a>
+                <a href="dasboard.html" class="text-gray-600 hover:text-indigo-600 font-medium transition-colors duration-200 flex items-center px-2 py-1 rounded-lg">
+                    <i class="fas fa-chart-bar text-sm sm:text-base"></i>
+                    <span class="hidden sm:inline ml-1 text-sm sm:text-base">Dashboard</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <!-- Hero Section - Enhanced -->
+    <div class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/20 to-purple-600/20"></div>
+        <div class="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-16">
+            <div class="text-center animate-slide-up">
+                <h1 class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-4 sm:mb-6">
+                    🏛️ Portal Data DPR RI
+                </h1>
+                <p class="text-lg sm:text-2xl text-gray-600 mb-6 sm:mb-8 px-2">
+                    Database Terbaru dengan 6700+ Records
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6">
+                    <div class="inline-flex items-center space-x-2 sm:space-x-3 bg-green-100 text-green-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-lg font-semibold">
+                        <span class="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full animate-pulse-custom"></span>
+                        <span>6700+ Records</span>
+                    </div>
+                    <div class="inline-flex items-center space-x-2 sm:space-x-3 bg-blue-100 text-blue-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-lg font-semibold">
+                        <i class="fas fa-bolt animate-bounce-soft"></i>
+                        <span>Super Fast Search</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Section - Enhanced -->
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div class="bg-white/80 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-10 border border-white/30 animate-fade-in">
+            <div class="flex items-center mb-6 sm:mb-8">
+                <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                    <i class="fas fa-search text-2xl sm:text-3xl text-indigo-600"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl sm:text-3xl font-bold text-gray-800">Pencarian Anggota DPR</h2>
+                    <p class="text-sm sm:text-base text-gray-600">Cari berdasarkan nama, fraksi, jabatan, atau daerah</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col gap-4 sm:gap-6">
+                <div class="flex-1">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="w-full px-6 sm:px-8 py-4 sm:py-5 text-lg sm:text-xl border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all duration-200 bg-white/90 placeholder-gray-400"
+                        placeholder="Cari nama, fraksi, jabatan, tempat lahir, atau provinsi..."
+                        autocomplete="off"
+                    >
+                </div>
+                
+                <!-- Advanced Filters -->
+                <div id="filterSection" class="hidden bg-gray-50 rounded-xl p-4 space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <select id="fraksiFilter" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="">Semua Fraksi</option>
+                        </select>
+                        <select id="provinsiFilter" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="">Semua Provinsi</option>
+                        </select>
+                        <select id="jabatanFilter" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="">Semua Jabatan</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3 sm:gap-4">
+                    <button 
+                        id="searchBtn"
+                        class="flex-1 sm:flex-none px-8 sm:px-12 py-4 sm:py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl sm:rounded-2xl hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-xl hover:shadow-2xl text-base sm:text-lg"
+                    >
+                        <i class="fas fa-search mr-3"></i>Cari Sekarang
+                    </button>
+                    
+                    <button 
+                        id="toggleFilters"
+                        class="px-4 sm:px-6 py-4 sm:py-5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl sm:rounded-2xl transition-all duration-200 text-sm sm:text-base"
+                        title="Filter Lanjutan"
+                    >
+                        <i class="fas fa-sliders-h mr-1 sm:mr-2"></i>
+                        <span class="hidden sm:inline">Filter</span>
+                    </button>
+                    
+                    <button 
+                        id="downloadBtn"
+                        class="px-4 sm:px-6 py-4 sm:py-5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium rounded-xl sm:rounded-2xl hover:from-green-700 hover:to-emerald-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                        title="Download Data CSV"
+                    >
+                        <i class="fas fa-download mr-1 sm:mr-2"></i>
+                        <span class="hidden sm:inline">Download</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-4 sm:mt-6 text-gray-600 text-sm sm:text-base">
+                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                <span><strong>Tips:</strong> Coba cari nama anggota, nama fraksi seperti "PAN", nama provinsi seperti "Aceh", atau jabatan seperti "Ketua"</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="hidden max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-6">
+        <div class="text-center">
+            <div class="inline-flex items-center space-x-4 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+                <div class="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-4 border-indigo-600 border-t-transparent"></div>
+                <span class="text-lg sm:text-xl text-gray-700 font-medium">Mencari data...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8"></div>
+
+    <!-- Features Section - Updated -->
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-16">
+        <div class="text-center mb-8 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Fitur Database Terbaru</h2>
+            <p class="text-base sm:text-lg text-gray-600">Teknologi modern untuk akses data yang lebih cepat dan akurat</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/30 hover:transform hover:scale-105">
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <i class="fas fa-database text-2xl sm:text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">6700+ Records</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Database terlengkap dengan data anggota DPR terbaru</p>
+                </div>
+            </div>
+            
+            <div class="bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/30 hover:transform hover:scale-105">
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <i class="fas fa-search text-2xl sm:text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Smart Search</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Pencarian cerdas di multiple field dengan hasil akurat</p>
+                </div>
+            </div>
+            
+            <div class="bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/30 hover:transform hover:scale-105">
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <i class="fas fa-bolt text-2xl sm:text-3xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Lightning Fast</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Powered by SQLite dengan index teroptimasi</p>
+                </div>
+            </div>
+            
+            <div class="bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/30 hover:transform hover:scale-105">
+                <div class="text-center">
+                    <div class="bg-orange-100 w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <i class="fas fa-mobile-alt text-2xl sm:text-3xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Mobile Ready</h3>
+                    <p class="text-sm sm:text-base text-gray-600">Responsive design untuk semua perangkat</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- FAQ Section -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 bg-gray-50">
+    <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan</h2>
+        <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">Temukan jawaban atas pertanyaan umum tentang Portal Data DPR RI</p>
+    </div>
+    
+    <div class="max-w-4xl mx-auto space-y-6">
+        <!-- FAQ Item 1 -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <button class="faq-toggle w-full px-6 py-5 sm:px-8 sm:py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-300" 
+                    data-target="faq1">
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 pr-6">Mengapa Portal Data DPR RI dibuat?</h3>
+                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="faq1" class="faq-content hidden px-6 pb-6 sm:px-8 sm:pb-8">
+                <div class="border-t border-gray-100 pt-5">
+                    <p class="text-gray-700 text-base leading-relaxed">
+                        Portal Data DPR RI dirancang untuk memberikan akses cepat dan transparan terhadap informasi anggota DPR RI. Dengan antarmuka yang ramah pengguna dan teknologi database modern, portal ini memudahkan masyarakat untuk mengenal wakil rakyat mereka, meningkatkan transparansi, dan memperkuat akuntabilitas dalam sistem demokrasi Indonesia.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <button class="faq-toggle w-full px-6 py-5 sm:px-8 sm:py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-300" 
+                    data-target="faq2">
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 pr-6">Data apa saja yang tersedia di portal ini?</h3>
+                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="faq2" class="faq-content hidden px-6 pb-6 sm:px-8 sm:pb-8">
+                <div class="border-t border-gray-100 pt-5">
+                    <p class="text-gray-700 text-base mb-4">
+                        Portal ini menyediakan informasi lengkap tentang anggota DPR RI, meliputi:
+                    </p>
+                    <div class="bg-gray-50 rounded-lg p-5 mb-4">
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>ID Unik</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Nama Lengkap</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Provinsi ID & Nama</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Tempat Lahir</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Tanggal Lahir</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Jabatan</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Fraksi</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Alamat Lengkap</li>
+                        </ul>
+                    </div>
+                    <p class="text-sm text-gray-600 bg-blue-50 p-4 rounded-lg">
+                        <strong>Contoh:</strong> Ramli, SE dari Pasie Teungoh (lahir 14 Juni 1965), menjabat sebagai Ketua DPRK Aceh Barat, beralamat di Sekretariat DPRK Aceh Barat, Jln. Iskandar Muda No. 01 Meulaboh.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <button class="faq-toggle w-full px-6 py-5 sm:px-8 sm:py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-300" 
+                    data-target="faq3">
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 pr-6">Bagaimana cara menggunakan fitur pencarian?</h3>
+                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="faq3" class="faq-content hidden px-6 pb-6 sm:px-8 sm:pb-8">
+                <div class="border-t border-gray-100 pt-5">
+                    <p class="text-gray-700 text-base mb-4">
+                        Portal ini menawarkan fitur pencarian yang intuitif dengan beberapa metode:
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">Pencarian Teks</h4>
+                            <p class="text-sm text-gray-600">Masukkan nama, fraksi, jabatan, atau daerah pada kolom pencarian untuk hasil cepat.</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">Filter Lanjutan</h4>
+                            <p class="text-sm text-gray-600">Saring hasil berdasarkan fraksi, provinsi, atau jabatan untuk spesifikasi lebih lanjut.</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">Kombinasi Pencarian</h4>
+                            <p class="text-sm text-gray-600">Gabungkan pencarian teks dan filter untuk hasil yang lebih akurat dan relevan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <button class="faq-toggle w-full px-6 py-5 sm:px-8 sm:py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-300" 
+                    data-target="faq4">
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 pr-6">Apakah data dapat diunduh untuk penelitian?</h3>
+                <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="faq4" class="faq-content hidden px-6 pb-6 sm:px-8 sm:pb-8">
+                <div class="border-t border-gray-100 pt-5">
+                    <p class="text-gray-700 text-base">
+                        Ya, Anda dapat mengunduh data dalam format CSV untuk keperluan penelitian, analisis, atau studi akademik. Data mencakup semua informasi yang tersedia di portal dan kompatibel dengan aplikasi spreadsheet seperti Excel. Pastikan penggunaan data sesuai dengan ketentuan hukum dan etika penelitian.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-8 sm:py-12 mt-12 sm:mt-16">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 text-center">
+            <div class="mb-6">
+                <h3 class="text-xl sm:text-2xl font-bold mb-2">Portal Data DPR RI</h3>
+                <p class="text-sm sm:text-base text-gray-300">Database Terbaru • Express.js + SQLite</p>
+            </div>
+            <div class="border-t border-gray-700 pt-6">
+                <p class="text-sm sm:text-base">
+                    &copy; 2025 Portal Data DPR RI • Powered by Modern Web Technology
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Detail Modal - Enhanced -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-60 backdrop-blur-sm">
+        <div class="flex items-start justify-center min-h-screen px-2 sm:px-4 py-6 sm:py-12">
+            <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="sticky top-0 bg-white p-4 sm:p-6 border-b border-gray-200 rounded-t-2xl sm:rounded-t-3xl">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl sm:text-2xl font-bold text-gray-800">Detail Anggota DPR</h3>
+                        <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl p-2 rounded-full hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="modalContent" class="p-4 sm:p-6">
+                    <!-- Modal content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced DPR Search for New Database Schema
+        class DPRSearch {
+            constructor() {
+                this.initElements();
+                this.initEventListeners();
+                this.loadFilterOptions();
+                
+                // Enhanced API configuration
+                this.API_CONFIG = {
+                    LOCAL_URL: 'http://localhost:3000',
+                    PRODUCTION_URL: 'https://your-app-name.onrender.com',
+                    
+                    get BASE_URL() {
+                        return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                            ? this.LOCAL_URL 
+                            : this.PRODUCTION_URL;
+                    },
+                    
+                    ENDPOINTS: {
+                        SEARCH: '/api/search',
+                        MEMBERS: '/api/members',
+                        STATS: '/api/stats',
+                        FILTERS: '/api/filters',
+                        EXPORT: '/api/export'
+                    }
+                };
+                
+                this.currentPage = 1;
+                this.lastQuery = '';
+                this.totalPages = 0;
+                this.isLoading = false;
+            }
+
+            initElements() {
+                this.searchInput = document.getElementById('searchInput');
+                this.searchBtn = document.getElementById('searchBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.toggleFiltersBtn = document.getElementById('toggleFilters');
+                this.filterSection = document.getElementById('filterSection');
+                this.loading = document.getElementById('loading');
+                this.results = document.getElementById('results');
+                this.modal = document.getElementById('detailModal');
+                this.modalContent = document.getElementById('modalContent');
+                this.closeModal = document.getElementById('closeModal');
+                
+                // Filter elements
+                this.fraksiFilter = document.getElementById('fraksiFilter');
+                this.provinsiFilter = document.getElementById('provinsiFilter');
+                this.jabatanFilter = document.getElementById('jabatanFilter');
+            }
+
+            initEventListeners() {
+                // Search functionality
+                this.searchBtn?.addEventListener('click', () => this.performSearch(1));
+                
+                this.searchInput?.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !this.isLoading) {
+                        this.performSearch(1);
+                    }
+                });
+                
+                // Filter toggle
+                this.toggleFiltersBtn?.addEventListener('click', () => {
+                    this.filterSection.classList.toggle('hidden');
+                    const icon = this.toggleFiltersBtn.querySelector('i');
+                    if (this.filterSection.classList.contains('hidden')) {
+                        icon.className = 'fas fa-sliders-h mr-1 sm:mr-2';
+                    } else {
+                        icon.className = 'fas fa-times mr-1 sm:mr-2';
+                    }
+                });
+                
+                // Download functionality
+                this.downloadBtn?.addEventListener('click', () => this.downloadData());
+                
+                // Modal events
+                this.closeModal?.addEventListener('click', () => this.hideModal());
+                this.modal?.addEventListener('click', (e) => {
+                    if (e.target === this.modal) this.hideModal();
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !this.modal?.classList.contains('hidden')) {
+                        this.hideModal();
+                    }
+                });
+                
+                // Focus search input
+                this.searchInput?.focus();
+            }
+
+            async loadFilterOptions() {
+                try {
+                    const response = await fetch(`${this.API_CONFIG.BASE_URL}${this.API_CONFIG.ENDPOINTS.FILTERS}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.populateFilterOptions(data.data);
+                    }
+                } catch (error) {
+                    console.error('Error loading filter options:', error);
+                }
+            }
+
+            populateFilterOptions(options) {
+                // Populate fraksi filter
+                if (options.fraksi && this.fraksiFilter) {
+                    options.fraksi.forEach(fraksi => {
+                        const option = document.createElement('option');
+                        option.value = fraksi;
+                        option.textContent = fraksi;
+                        this.fraksiFilter.appendChild(option);
+                    });
+                }
+                
+                // Populate provinsi filter
+                if (options.provinsi && this.provinsiFilter) {
+                    options.provinsi.forEach(provinsi => {
+                        const option = document.createElement('option');
+                        option.value = provinsi;
+                        option.textContent = provinsi;
+                        this.provinsiFilter.appendChild(option);
+                    });
+                }
+                
+                // Populate jabatan filter
+                if (options.jabatan && this.jabatanFilter) {
+                    options.jabatan.forEach(jabatan => {
+                        const option = document.createElement('option');
+                        option.value = jabatan;
+                        option.textContent = jabatan;
+                        this.jabatanFilter.appendChild(option);
+                    });
+                }
+            }
+
+            getFilters() {
+                return {
+                    fraksi: this.fraksiFilter?.value || '',
+                    provinsi: this.provinsiFilter?.value || '',
+                    jabatan: this.jabatanFilter?.value || ''
+                };
+            }
+
+            async performSearch(page = 1) {
+                const query = this.searchInput?.value.trim() || '';
+                const filters = this.getFilters();
+                
+                if (!query && page === 1 && !Object.values(filters).some(f => f)) {
+                    this.showError('Silakan masukkan kata kunci pencarian atau pilih filter');
+                    return;
+                }
+
+                if (this.isLoading) return;
+
+                try {
+                    this.isLoading = true;
+                    
+                    if (page === 1) {
+                        this.showLoading();
+                        this.clearResults();
+                        this.lastQuery = query;
+                    } else {
+                        this.showLoadMoreLoading();
+                    }
+
+                    const payload = {
+                        query: query,
+                        page: page,
+                        limit: 25,
+                        sortBy: 'nama',
+                        sortOrder: 'ASC',
+                        filters: filters
+                    };
+
+                    const response = await fetch(`${this.API_CONFIG.BASE_URL}${this.API_CONFIG.ENDPOINTS.SEARCH}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+
+                    this.hideLoading();
+                    this.currentPage = page;
+                    this.totalPages = data.pagination?.totalPages || 1;
+                    
+                    if (page === 1) {
+                        this.displayResults(data);
+                    } else {
+                        this.appendResults(data);
+                    }
+
+                } catch (error) {
+                    this.hideLoading();
+                    this.handleError(error, 'Search');
+                } finally {
+                    this.isLoading = false;
+                }
+            }
+
+            displayResults(data) {
+                if (!data.results || data.results.length === 0) {
+                    this.results.innerHTML = `
+                        <div class="max-w-4xl mx-auto">
+                            <div class="bg-yellow-100 border-2 border-yellow-300 text-yellow-800 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl flex items-center animate-fade-in shadow-lg">
+                                <i class="fas fa-info-circle mr-3 sm:mr-4 text-xl sm:text-2xl"></i>
+                                <div>
+                                    <p class="text-base sm:text-lg font-semibold">Tidak ada hasil ditemukan</p>
+                                    <p class="text-sm sm:text-base">untuk pencarian: "<strong>${data.query || this.lastQuery}</strong>"</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = `
+                    <div class="max-w-7xl mx-auto">
+                        <div class="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-300 text-green-800 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl flex items-center mb-6 sm:mb-8 animate-fade-in shadow-lg">
+                            <i class="fas fa-check-circle mr-3 sm:mr-4 text-xl sm:text-2xl"></i>
+                            <div>
+                                <p class="text-base sm:text-lg font-semibold">
+                                    Ditemukan <strong>${data.total || data.count || data.results.length}</strong> hasil
+                                </p>
+                                <p class="text-sm sm:text-base">
+                                    ${data.query ? `untuk: "<strong>${data.query}</strong>"` : 'dengan filter yang dipilih'}
+                                    ${data.pagination ? ` (Halaman ${data.pagination.currentPage} dari ${data.pagination.totalPages})` : ''}
+                                </p>
+                            </div>
+                        </div>
+                        <div id="resultsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                `;
+
+                data.results.forEach((member, index) => {
+                    html += this.createMemberCard(member, index);
+                });
+
+                html += `</div>`;
+
+                // Add load more button
+                if (data.pagination?.hasNext) {
+                    html += `
+                        <div class="text-center mt-8">
+                            <button id="loadMoreBtn" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors duration-200 disabled:opacity-50 shadow-lg hover:shadow-xl">
+                                <i class="fas fa-plus mr-2"></i>Muat Lebih Banyak
+                            </button>
+                        </div>
+                    `;
+                }
+
+                html += `</div>`;
+                this.results.innerHTML = html;
+
+                // Setup load more functionality
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.addEventListener('click', () => {
+                        if (!this.isLoading) {
+                            this.performSearch(this.currentPage + 1);
+                        }
+                    });
+                }
+            }
+
+            createMemberCard(member, index) {
+                const delay = Math.min(index * 100, 1000);
+                
+                // Calculate age display
+                const ageDisplay = member.usia ? `${member.usia} tahun` : 'Usia tidak diketahui';
+                
+                // Format tanggal lahir
+                const birthDisplay = member.tanggal_lahir || 'Tidak diketahui';
+                
+                // Get leadership status
+                const leadershipBadge = member.is_ketua ? 
+                    '<span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-semibold">Ketua</span>' :
+                    member.is_wakil_ketua ? 
+                    '<span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full font-semibold">Wakil Ketua</span>' : '';
+                
+                return `
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-white/40 cursor-pointer transform hover:scale-102 animate-fade-in overflow-hidden" 
+                         style="animation-delay: ${delay}ms"
+                         onclick="dprSearch.showMemberDetail(${JSON.stringify(member).replace(/"/g, '&quot;')})">
+                        
+                        <div class="p-4 sm:p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center mb-2">
+                                        <h3 class="text-base sm:text-lg font-bold text-gray-800 line-clamp-2 break-words flex-1">
+                                            <i class="fas fa-user text-indigo-600 mr-2"></i>
+                                            ${member.nama || 'Nama tidak tersedia'}
+                                        </h3>
+                                        ${leadershipBadge}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2 sm:space-y-3">
+                                <div class="flex items-center text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-flag text-blue-500 w-4 mr-2 flex-shrink-0"></i>
+                                    <span class="font-medium">Fraksi:</span>
+                                    <span class="ml-2 truncate">${member.fraksi && member.fraksi !== '-' ? member.fraksi : 'Tidak Ada'}</span>
+                                </div>
+                                
+                                <div class="flex items-center text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-briefcase text-green-500 w-4 mr-2 flex-shrink-0"></i>
+                                    <span class="font-medium">Jabatan:</span>
+                                    <span class="ml-2 truncate">${member.jabatan || 'Tidak diketahui'}</span>
+                                </div>
+                                
+                                <div class="flex items-center text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-map text-purple-500 w-4 mr-2 flex-shrink-0"></i>
+                                    <span class="font-medium">Provinsi:</span>
+                                    <span class="ml-2 truncate">${member.provinsi || 'Tidak diketahui'}</span>
+                                </div>
+
+                                <div class="flex items-center text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-map-marker-alt text-red-500 w-4 mr-2 flex-shrink-0"></i>
+                                    <span class="font-medium">Tempat Lahir:</span>
+                                    <span class="ml-2 truncate">${member.tempat_lahir || 'Tidak diketahui'}</span>
+                                </div>
+                                
+                                <div class="flex items-center text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-calendar text-orange-500 w-4 mr-2 flex-shrink-0"></i>
+                                    <span class="font-medium">Usia:</span>
+                                    <span class="ml-2">${ageDisplay}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <button class="text-indigo-600 hover:text-indigo-800 font-medium text-xs sm:text-sm transition-colors duration-200 flex items-center">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Lihat Detail Lengkap
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            showMemberDetail(member) {
+                const modalContent = `
+                    <div class="grid grid-cols-1 gap-6 sm:gap-8">
+                        <!-- Member Details -->
+                        <div>
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-2xl mb-6">
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-2">${member.nama || 'Nama tidak tersedia'}</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    ${member.is_ketua ? '<span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">Ketua</span>' : ''}
+                                    ${member.is_wakil_ketua ? '<span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">Wakil Ketua</span>' : ''}
+                                    ${member.fraksi && member.fraksi !== '-' ? `<span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">${member.fraksi}</span>` : ''}
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div class="bg-gray-50 p-4 rounded-xl">
+                                        <h4 class="font-semibold text-gray-700 mb-3 text-base flex items-center">
+                                            <i class="fas fa-briefcase text-blue-500 mr-2"></i>
+                                            Informasi Jabatan
+                                        </h4>
+                                        <div class="space-y-2 text-sm">
+                                            <div><span class="font-medium">Jabatan:</span> <span class="break-words">${member.jabatan || 'Tidak diketahui'}</span></div>
+                                            <div><span class="font-medium">Fraksi:</span> <span class="break-words">${member.fraksi && member.fraksi !== '-' ? member.fraksi : 'Tidak Ada Fraksi'}</span></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 p-4 rounded-xl">
+                                        <h4 class="font-semibold text-gray-700 mb-3 text-base flex items-center">
+                                            <i class="fas fa-user-circle text-green-500 mr-2"></i>
+                                            Data Pribadi
+                                        </h4>
+                                        <div class="space-y-2 text-sm">
+                                            <div><span class="font-medium">Tempat Lahir:</span> <span class="break-words">${member.tempat_lahir || 'Tidak diketahui'}</span></div>
+                                            <div><span class="font-medium">Tanggal Lahir:</span> <span class="break-words">${member.tanggal_lahir || 'Tidak diketahui'}</span></div>
+                                            <div><span class="font-medium">Usia:</span> ${member.usia ? `${member.usia} tahun` : 'Tidak diketahui'}</div>
+                                            <div><span class="font-medium">Provinsi:</span> ${member.provinsi || 'Tidak diketahui'}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="bg-gray-50 p-4 rounded-xl">
+                                        <h4 class="font-semibold text-gray-700 mb-3 text-base flex items-center">
+                                            <i class="fas fa-map-marked-alt text-purple-500 mr-2"></i>
+                                            Alamat & Kontak
+                                        </h4>
+                                        <div class="space-y-2 text-sm">
+                                            <div><span class="font-medium">Alamat:</span></div>
+                                            <div class="bg-white p-3 rounded-lg text-xs break-words max-h-32 overflow-y-auto">
+                                                ${member.alamat || 'Alamat tidak tersedia'}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 p-4 rounded-xl">
+                                        <h4 class="font-semibold text-gray-700 mb-3 text-base flex items-center">
+                                            <i class="fas fa-info-circle text-orange-500 mr-2"></i>
+                                            Keterangan
+                                        </h4>
+                                        <div class="bg-white p-3 rounded-lg text-xs break-words max-h-32 overflow-y-auto">
+                                            ${member.keterangan || 'Tidak ada keterangan tambahan'}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                this.modalContent.innerHTML = modalContent;
+                this.showModal();
+            }
+
+            async downloadData() {
+                if (!this.downloadBtn) return;
+                
+                try {
+                    const originalText = this.downloadBtn.innerHTML;
+                    this.downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i><span class="hidden sm:inline">Downloading...</span>';
+                    this.downloadBtn.disabled = true;
+
+                    const response = await fetch(`${this.API_CONFIG.BASE_URL}${this.API_CONFIG.ENDPOINTS.EXPORT}`);
+                    
+                    if (!response.ok) {
+                        throw new Error('Download failed');
+                    }
+                    
+                    const blob = await response.blob();
+                    
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'dpr_data_export.csv';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+
+                    this.showMessage('Data berhasil didownload!', 'success');
+                    
+                } catch (error) {
+                    this.handleError(error, 'Download');
+                } finally {
+                    if (this.downloadBtn) {
+                        this.downloadBtn.innerHTML = '<i class="fas fa-download mr-1 sm:mr-2"></i><span class="hidden sm:inline">Download</span>';
+                        this.downloadBtn.disabled = false;
+                    }
+                }
+            }
+
+            // Utility methods
+            showLoading() {
+                this.loading?.classList.remove('hidden');
+                if (this.searchBtn) {
+                    this.searchBtn.disabled = true;
+                    this.searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Mencari...';
+                }
+            }
+
+            hideLoading() {
+                this.loading?.classList.add('hidden');
+                if (this.searchBtn) {
+                    this.searchBtn.disabled = false;
+                    this.searchBtn.innerHTML = '<i class="fas fa-search mr-3"></i>Cari Sekarang';
+                }
+            }
+
+            showLoadMoreLoading() {
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.disabled = true;
+                    loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Memuat...';
+                }
+            }
+
+            clearResults() {
+                if (this.results) {
+                    this.results.innerHTML = '';
+                }
+            }
+
+            showError(message) {
+                if (!this.results) return;
+                
+                this.results.innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="bg-red-100 border-2 border-red-300 text-red-700 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl flex items-center animate-fade-in shadow-lg">
+                            <i class="fas fa-exclamation-triangle mr-3 sm:mr-4 text-xl sm:text-2xl"></i>
+                            <div>
+                                <p class="text-base sm:text-lg font-semibold">Terjadi Kesalahan</p>
+                                <p class="text-sm sm:text-base">${message}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            showMessage(message, type = 'info') {
+                const colors = {
+                    success: 'bg-green-100 border-green-300 text-green-700',
+                    error: 'bg-red-100 border-red-300 text-red-700',
+                    info: 'bg-blue-100 border-blue-300 text-blue-700'
+                };
+                
+                const icons = {
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-triangle',
+                    info: 'fa-info-circle'
+                };
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'fixed top-20 right-4 z-50 animate-slide-up';
+                messageDiv.innerHTML = `
+                    <div class="${colors[type]} px-6 py-4 rounded-xl border-2 shadow-lg flex items-center space-x-3 max-w-sm">
+                        <i class="fas ${icons[type]} text-xl"></i>
+                        <span class="font-medium">${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(messageDiv);
+                
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 4000);
+            }
+
+            handleError(error, context = '') {
+                console.error(`${context} Error:`, error);
+                
+                let message = 'Terjadi kesalahan. Silakan coba lagi.';
+                
+                if (error.message.includes('timeout')) {
+                    message = 'Koneksi timeout. Silakan periksa koneksi internet Anda.';
+                } else if (error.message.includes('404')) {
+                    message = 'Data tidak ditemukan.';
+                } else if (error.message.includes('500')) {
+                    message = 'Terjadi kesalahan server. Silakan coba lagi nanti.';
+                } else if (error.message) {
+                    message = error.message;
+                }
+                
+                this.showError(message);
+            }
+
+            showModal() {
+                this.modal?.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            hideModal() {
+                this.modal?.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // FAQ Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const targetId = toggle.getAttribute('data-target');
+            const content = document.getElementById(targetId);
+            const icon = toggle.querySelector('svg');
+            
+            if (content.classList.contains('hidden')) {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-content').forEach(faq => {
+                    faq.classList.add('hidden');
+                });
+                document.querySelectorAll('.faq-toggle svg').forEach(svg => {
+                    svg.classList.remove('rotate-180');
+                });
+                
+                // Open clicked FAQ
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                // Close clicked FAQ
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        });
+    });
+});
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dprSearch = new DPRSearch();
+        });
+    </script>
+</body>
+</html>
